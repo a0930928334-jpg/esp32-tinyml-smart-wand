@@ -9,7 +9,18 @@ This project was originally developed as my undergraduate final-year project. It
 
 ## Demo
 
-![Demo](media/demo.gif)
+<img src="media/demo.gif" width="320" alt="Demo of ESP32 Smart Wand gesture control">
+
+The demo shows the smart wand sending gesture-triggered infrared commands to a simulated receiver with LED and servo-based responses.
+## Tech Stack
+
+- **Microcontroller:** ESP32, Arduino/Nano
+- **Language:** Arduino C++
+- **Sensor:** MPU6050 six-axis IMU
+- **ML Deployment:** Edge Impulse TinyML
+- **Communication:** NEC infrared transmission
+- **Control Logic:** Sliding-window processing, confidence filtering, finite-state machine
+- **Actuation:** LED and servo-based simulated device control
 
 ## Quick Links
 
