@@ -1,3 +1,13 @@
+## Demo
+
+![Demo](media/demo.gif)
+> ## Quick Links
+
+- [System Architecture](docs/architecture.md)
+- [Hardware Setup](docs/hardware.md)
+- [TinyML Model](docs/model.md)
+- [Testing Results](docs/testing.md)
+- [Limitations](docs/limitations.md)
 # ESP32 Smart Wand: TinyML-Based Gesture Recognition and IoT Control Prototype
 
 An embedded AI prototype that uses an ESP32, an MPU6050 IMU sensor, and an Edge Impulse TinyML model to recognize hand gestures on-device and trigger simulated smart-home control actions through NEC infrared signals.
@@ -6,13 +16,6 @@ This project was originally developed as my undergraduate final-year project. It
 
 > This is a working prototype for simulated smart-home control.  
 > It is not a production-grade smart-home platform or a commercial IoT product.
-> ## Quick Links
-
-- [System Architecture](docs/architecture.md)
-- [Hardware Setup](docs/hardware.md)
-- [TinyML Model](docs/model.md)
-- [Testing Results](docs/testing.md)
-- [Limitations](docs/limitations.md)
 
 ---
 
