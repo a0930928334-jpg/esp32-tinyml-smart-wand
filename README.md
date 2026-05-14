@@ -6,6 +6,13 @@ This project was originally developed as my undergraduate final-year project. It
 
 > This is a working prototype for simulated smart-home control.  
 > It is not a production-grade smart-home platform or a commercial IoT product.
+> ## Quick Links
+
+- [System Architecture](docs/architecture.md)
+- [Hardware Setup](docs/hardware.md)
+- [TinyML Model](docs/model.md)
+- [Testing Results](docs/testing.md)
+- [Limitations](docs/limitations.md)
 
 ---
 
