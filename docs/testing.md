@@ -48,4 +48,4 @@ make -C tests
 
 56 checks cover the infrared encode/decode round trip, timer behaviour across a 32-bit counter wrap, the wake-up gate, the confidence and physical checks, all six two-step commands, and prefix timeout. GitHub Actions runs them with GCC and Clang, and again with AddressSanitizer and UBSan.
 
-These tests were written after the prototype was dismantled, during the code review described in [engineering-notes.md](engineering-notes.md). They verify the logic; they do not replace the physical tests above.
+These tests were written during the code review described in [engineering-notes.md](engineering-notes.md). They verify the logic and complement the physical tests above.

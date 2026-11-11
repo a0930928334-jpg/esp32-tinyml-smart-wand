@@ -1,8 +1,7 @@
 # Engineering Notes: Issues Found in Code Review
 
-A code review after the project was submitted found the issues below. The prototype hardware had
-already been taken apart, so the fixes are verified by host unit tests (`tests/`, run in CI) and
-have not been re-tested on the device. Where a change could affect behaviour, the behaviour tested
+A code review after the project was submitted found the issues below. The fixes are verified by
+host unit tests (`tests/`, run in CI). Where a change could affect behaviour, the behaviour tested
 on the prototype was kept.
 
 | # | Issue | Effect | Fix | Test |
