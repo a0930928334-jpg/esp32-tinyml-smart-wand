@@ -4,8 +4,6 @@
 
 This project implements an embedded gesture-control prototype using an ESP32-S3, an MPU6050 IMU sensor, an Edge Impulse TinyML model, and NEC infrared communication.
 
-The project is designed as a working embedded AI prototype for simulated smart-home control. It is not a production-grade smart-home platform.
-
 ## Core Pipeline
 
 ```text
@@ -41,7 +39,7 @@ The MPU6050 provides six-axis motion data:
 - ax, ay, az
 - gx, gy, gz
 
-The ESP32 reads these values through I2C and stores them in a fixed-size sliding-window buffer.
+The ESP32-S3 reads these values through I2C and stores them in a fixed-size sliding-window buffer.
 
 ### 2. Sliding-Window Buffer
 
@@ -73,7 +71,7 @@ The firmware does not directly trust the highest model score. It applies additio
 - secondary physical validation
 - prefix timeout
 
-These mechanisms reduce false triggers, but they do not make the prototype fully robust in all environments.
+These checks reduce false triggers. They also reject some real gestures; see [testing.md](testing.md).
 
 ### 6. Finite-State Command Logic
 

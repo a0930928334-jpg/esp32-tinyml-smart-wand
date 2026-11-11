@@ -53,16 +53,9 @@ Basic receiver-side wiring:
 | Door servo | D9 |
 | Curtain servo | D10 |
 
-## Practical Hardware Issues
+## Things that affected reliability
 
-During prototype testing, several hardware-related issues can affect reliability:
-
-- Loose jumper wires may cause unstable behavior.
-- Servo motors may behave incorrectly without enough current.
-- The IR transmitter and receiver require reasonable alignment.
-- MPU6050 mounting stability affects gesture data quality.
-- Holding direction and gesture amplitude influence recognition performance.
-
-## Hardware Boundary
-
-This project uses LED and servo motors to simulate smart-home devices. It does not directly control real household electrical equipment.
+- Loose jumper wires caused unstable behaviour.
+- The servos need more current than the Nano can supply, hence the separate 5 V supply.
+- The infrared LED and receiver need to be roughly aligned.
+- The MPU6050 must be fixed firmly to the wand; if it shifts, the gesture data changes.

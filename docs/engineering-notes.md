@@ -1,9 +1,9 @@
 # Engineering Notes: Issues Found in Code Review
 
-After the project was submitted, I reviewed the firmware again and fixed the issues below. The
-prototype hardware has since been taken apart. These fixes are therefore verified by host unit tests
-(`tests/`, run in CI) and not re-tested on the device. Where a change could affect behaviour, I kept
-the behaviour that was tested on the prototype.
+A code review after the project was submitted found the issues below. The prototype hardware had
+already been taken apart, so the fixes are verified by host unit tests (`tests/`, run in CI) and
+have not been re-tested on the device. Where a change could affect behaviour, the behaviour tested
+on the prototype was kept.
 
 | # | Issue | Effect | Fix | Test |
 |---|---|---|---|---|
@@ -75,8 +75,8 @@ same helper. The receiver previously compared `millis() >= stop_ms`, which has t
 ## 3. A safety check that could not fail
 
 The upward-swing gesture had a secondary check, `max_accel < 8.0` → reject. Inference only runs when
-`max_accel >= 13.0` (the wake-up gate), so this check never rejected anything. I removed it rather
-than invent a new threshold without hardware to tune it on. If the hardware is rebuilt, a better
+`max_accel >= 13.0` (the wake-up gate), so this check never rejected anything. It was removed rather
+than replaced with a new threshold that could not be tuned without hardware. If the hardware is rebuilt, a better
 check would use the vertical axis (for example a peak in `az` or `gy`), measured from recorded data.
 
 ## 4. Model output order
