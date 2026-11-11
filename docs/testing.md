@@ -1,65 +1,51 @@
-﻿# Testing
+# Testing
 
-## Overview
+The project was tested at three levels: the model on held-out data, the prototype in the hand, and the decision logic in unit tests.
 
-The prototype was evaluated through both platform validation and physical prototype testing.
+## 1. Model validation (Edge Impulse)
 
-A key boundary of this project is that Edge Impulse validation metrics and real-world physical prototype results are not the same thing.
+| Metric | Result |
+|---|---:|
+| Validation accuracy | 95.8% |
+| Validation loss | ~0.11 |
+| Weighted precision / recall / F1 | ~0.96 |
 
-## Test Categories
+## 2. Physical prototype
 
-The project includes the following test categories:
+| Test | Result |
+|---|---:|
+| Single gesture recognised correctly | ~90% |
+| Two-step command completed (prefix, then trigger) | ~85% |
+| Infrared command received and executed | ~89% |
 
-1. Edge Impulse validation
-2. ESP32 on-device inference check
-3. Physical single-gesture recognition tests
-4. Combined command tests
-5. Infrared control tests
-6. Continuous operation and robustness tests
+The two-step commands are:
 
-## Platform Validation Results
-
-| Metric | Result | Notes |
-|---|---:|---|
-| Edge Impulse validation accuracy | 95.8% | Validation-set result, not real-world accuracy |
-| Validation loss | ~0.11 | Edge Impulse validation result |
-| Weighted precision / recall / F1 | ~0.96 | Edge Impulse validation result |
-| On-device inference time | ~1 ms | ESP32-side deployment estimate |
-| Peak RAM usage | ~1.6 KB | Model deployment estimate |
-| Flash usage | ~16.9 KB | Model deployment estimate |
-
-## Physical Prototype Test Results
-
-| Test Item | Result | Notes |
-|---|---:|---|
-| Physical single-gesture recognition rate | ~90.0% | Prototype-level test result |
-| Combined command success rate | ~85.0% | Prototype-level test result |
-| Infrared control success rate | ~89.0% | Prototype-level test result |
-
-## Command Testing
-
-The finite-state command logic supports six simulated commands:
-
-| Prefix Gesture | Trigger Gesture | Simulated Command |
+| First gesture | Then | Command |
 |---|---|---|
-| None | Circle | Light on |
-| None | Z | Light off |
+| | Circle | Light on |
+| | Z | Light off |
 | Upward swing | Circle | Curtain open |
 | Upward swing | Z | Curtain close |
 | Forward thrust | Circle | Door open |
 | Forward thrust | Z | Door close |
 
-## Observed Issues
+## Why the prototype scores lower than the validation set
 
-During physical testing, the following issues were observed:
+- **Held-out data is still similar data.** The validation set is split from the same recordings as the training set, so it shares the same grip, speed and gesture size. Real use varies all three.
+- **Two gestures must both succeed.** A two-step command needs two correct recognitions in a row. Two independent 90% steps give about 81%, close to the 85% measured.
+- **Extra gates reject real gestures.** The wake-up threshold and the physical checks cut false triggers, and they also reject weak or incomplete gestures that the model alone would have accepted.
+- **Infrared is directional.** The command can be recognised correctly and still not arrive if the wand is not pointing at the receiver, which is why each command is sent six times.
 
-- Some gestures are sensitive to user motion style.
-- Weak or incomplete gestures may not pass physical wake-up or secondary validation.
-- Some movements may be misclassified as forward thrust.
-- Infrared directionality affects receiver success.
-- Servo response depends on power supply and mechanical setup.
-- Real-world physical results are lower than validation-set metrics.
+Problems seen during testing: some movements were misread as a forward thrust, weak gestures were ignored, and servo behaviour depended on the power supply.
 
-## Testing Boundary
+## 3. Host unit tests
 
-These results are prototype-level results. They are useful for demonstrating the system workflow, but they should not be treated as production reliability metrics.
+The decision logic (`gesture_logic.h`) and the shared headers have no Arduino dependency, so they are tested on a PC:
+
+```bash
+make -C tests
+```
+
+56 checks cover the infrared encode/decode round trip, timer behaviour across a 32-bit counter wrap, the wake-up gate, the confidence and physical checks, all six two-step commands, and prefix timeout. GitHub Actions runs them with GCC and Clang, and again with AddressSanitizer and UBSan.
+
+These tests were written during the code review described in [engineering-notes.md](engineering-notes.md). They verify the logic and complement the physical tests above.

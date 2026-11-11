@@ -1,66 +1,28 @@
-﻿# Limitations
+# Limitations
 
-This project is a working embedded AI prototype, but it has clear limitations.
+## Data
 
-## Dataset Limitations
+The dataset is small and covers few users. The model would need more samples from more people, with different grips, speeds and gesture sizes, before it generalises.
 
-The dataset size is limited. More samples from more users would be needed to improve generalization.
+## Recognition
 
-The model may perform well on the validation set but still behave less reliably in real physical use because user gestures vary in speed, direction, amplitude, and holding posture.
+- Recognition depends on how the wand is held and how large the gesture is.
+- Some movements are misread as a forward thrust. The physical check reduces this but does not remove it.
+- The "estimated distance" used in the physical check is a rough score from double-integrating acceleration. It drifts and is not a real displacement measurement.
 
-## Gesture Robustness
+## Infrared
 
-Recognition performance depends on:
+- The wand must point roughly at the receiver.
+- There is no acknowledgement: the wand cannot know whether a command arrived, so it sends each one six times and the receiver ignores the repeats.
+- Sending blocks the wand for about 2 seconds, during which it does not sample.
 
-- user motion style
-- holding direction
-- gesture amplitude
-- sensor mounting stability
-- IMU noise
-- similarity between some gesture patterns
+## Scope
 
-The robustness mechanisms reduce some false triggers, but they do not fully solve the problem.
+The receiver drives an LED and two servos on a model house. There is no network connection, app, or device-state feedback.
 
-## Physical Validation Boundary
+## What I would do next
 
-The secondary validation logic uses simple physical features such as acceleration intensity and estimated movement.
-
-The estimated movement distance is only a heuristic. It should not be described as accurate spatial tracking or precise displacement measurement.
-
-## Infrared Control Boundary
-
-Infrared control is useful for low-cost prototype demonstration, but it has limitations:
-
-- It requires direction alignment.
-- It can be affected by obstacles.
-- It does not provide device state feedback.
-- It is not equivalent to a full IoT communication system.
-
-## Product Boundary
-
-This project is not a commercial smart-home product.
-
-It does not include:
-
-- cloud backend
-- mobile application
-- Wi-Fi device management
-- user authentication
-- device state synchronization
-- production enclosure
-- long-term reliability testing
-- safety certification
-
-## Future Work
-
-Potential improvements include:
-
-- collecting more multi-user gesture data
-- improving dataset balance
-- adding more systematic physical testing
-- comparing TinyML with rule-based baselines
-- improving IMU feature extraction
-- using BLE or Wi-Fi instead of infrared
-- designing a more stable enclosure
-- adding configurable thresholds
-- improving receiver-side feedback
+1. Record data from more people and retrain, then measure accuracy per person.
+2. Replace the forward-thrust physical check with features chosen from recorded data, and compare the classifier against a simple rule-based baseline.
+3. Port the wand to an Arm Cortex-M board and compare latency and memory with the ESP32-S3, with int8 and float32 models.
+4. Replace infrared with BLE so the receiver can acknowledge commands.
