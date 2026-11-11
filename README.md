@@ -1,29 +1,65 @@
 # ESP32 Smart Wand: TinyML-Based Gesture Recognition and IoT Control Prototype
 
-An embedded AI prototype that uses an ESP32, an MPU6050 IMU sensor, and an Edge Impulse TinyML model to recognize hand gestures on-device and trigger simulated smart-home control actions through NEC infrared signals.
+[![host-tests](https://github.com/a0930928334-jpg/esp32-tinyml-smart-wand/actions/workflows/host-tests.yml/badge.svg)](https://github.com/a0930928334-jpg/esp32-tinyml-smart-wand/actions/workflows/host-tests.yml)
+
+An embedded AI prototype that uses an ESP32-S3, an MPU6050 IMU sensor, and an Edge Impulse TinyML model to recognize hand gestures on-device and trigger simulated smart-home control actions through NEC infrared signals.
 
 This project was originally developed as my undergraduate final-year project. It is packaged here as a technical portfolio project to demonstrate embedded software development, sensor data processing, TinyML deployment, finite-state command logic, and hardware-software integration.
 
 > This is a working prototype for simulated smart-home control.  
 > It is not a production-grade smart-home platform or a commercial IoT product.
 
+## At a Glance
+
+| | |
+|---|---|
+| On-device inference | ~1 ms per window on the ESP32-S3 |
+| Model footprint | ~1.6 KB peak RAM, ~16.9 KB flash |
+| Validation accuracy | 95.8% (Edge Impulse validation set) |
+| Physical tests | ~90% single gesture, ~85% two-step command, ~89% infrared delivery |
+| Commands | 6, built from 5 gesture classes by a two-step state machine |
+| Host unit tests | 56 checks on the decision logic and shared headers, run in CI |
+
 ## Demo
 
 <img src="media/demo.gif" width="320" alt="Demo of ESP32 Smart Wand gesture control">
 
 The demo shows the smart wand sending gesture-triggered infrared commands to a simulated receiver with LED and servo-based responses.
+
 ## Tech Stack
 
-- **Microcontroller:** ESP32, Arduino/Nano
-- **Language:** Arduino C++
+- **Microcontrollers:** ESP32-S3 (wand), Arduino Nano / ATmega328P (receiver)
+- **Language:** C++ (Arduino framework, PlatformIO)
 - **Sensor:** MPU6050 six-axis IMU
 - **ML Deployment:** Edge Impulse TinyML
 - **Communication:** NEC infrared transmission
 - **Control Logic:** Sliding-window processing, confidence filtering, finite-state machine
 - **Actuation:** LED and servo-based simulated device control
+- **Testing:** host unit tests (GCC, Clang, AddressSanitizer/UBSan) in GitHub Actions
+
+## Repository Layout
+
+```text
+firmware/
+  common/            ir_codes.h, timing.h   shared by both boards
+  wand-esp32s3/      sensing, inference, gesture logic, IR sender
+  receiver-nano/     IR decoding, LED and servo control
+tests/               host unit tests for the decision logic (make -C tests)
+docs/                architecture, hardware, model, testing, limitations, engineering notes
+model/               Edge Impulse export notes
+```
+
+## Build and Test
+
+```bash
+make -C tests                                   # host unit tests, no hardware needed
+cd firmware/wand-esp32s3 && pio run -t upload    # needs the Edge Impulse library, see its README
+cd firmware/receiver-nano && pio run -t upload
+```
 
 ## Quick Links
 
+- [Engineering Notes: issues found in code review and how they were fixed](docs/engineering-notes.md)
 - [System Architecture](docs/architecture.md)
 - [Hardware Setup](docs/hardware.md)
 - [TinyML Model](docs/model.md)

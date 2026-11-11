@@ -1,0 +1,6 @@
+
+# PlatformIO
+.pio/
+firmware/wand-esp32s3/lib/SmartWand2_inferencing/
+# host test binary
+tests/host_tests

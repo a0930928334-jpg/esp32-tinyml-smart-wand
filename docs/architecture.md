@@ -1,8 +1,8 @@
-﻿# System Architecture
+# System Architecture
 
 ## Overview
 
-This project implements an embedded gesture-control prototype using an ESP32, an MPU6050 IMU sensor, an Edge Impulse TinyML model, and NEC infrared communication.
+This project implements an embedded gesture-control prototype using an ESP32-S3, an MPU6050 IMU sensor, an Edge Impulse TinyML model, and NEC infrared communication.
 
 The project is designed as a working embedded AI prototype for simulated smart-home control. It is not a production-grade smart-home platform.
 
@@ -87,4 +87,14 @@ This design allows a small gesture set to generate six simulated control command
 
 ### 7. Infrared Transmission and Receiver
 
-After a command is generated, the ESP32 sends a 32-bit NEC infrared code. The Arduino/Nano receiver decodes the signal and controls an LED and servo motors to simulate light, curtain, and door actions.
+After a command is generated, the ESP32-S3 sends a 32-bit NEC infrared code. Both boards share one command table (`firmware/common/ir_codes.h`). The sender library writes the frame most-significant bit first and the receiver library reads it least-significant bit first, so the receiver reverses the bits before decoding (see [engineering notes](engineering-notes.md)). The Arduino/Nano receiver decodes the signal and controls an LED and servo motors to simulate light, curtain, and door actions.
+
+## Code Structure and Testing
+
+The wand firmware separates I/O from decisions:
+
+- `firmware/wand-esp32s3/src/main.cpp` reads the IMU, runs the classifier and sends infrared.
+- `firmware/wand-esp32s3/src/gesture_logic.h` holds feature extraction, the wake-up gate, gesture selection and the command state machine. It has no Arduino or Edge Impulse dependency.
+- `firmware/common/timing.h` provides wrap-safe timeouts for `millis()` and `micros()`.
+
+Because the decision logic is plain C++, `tests/host_tests.cpp` checks it on a desktop compiler. GitHub Actions runs the tests on every push.

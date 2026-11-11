@@ -1,4 +1,4 @@
-﻿# Edge Impulse Model Notes
+# Edge Impulse Model Notes
 
 ## Model Role
 
@@ -22,7 +22,7 @@ The main firmware references the generated model header:
 #include <SmartWand2_inferencing.h>
 ```
 
-To reproduce the firmware build, export the trained model from Edge Impulse as an Arduino library and place the generated library where the firmware can include it.
+To reproduce the firmware build, export the trained model from Edge Impulse as an Arduino library and unzip it into `firmware/wand-esp32s3/lib/SmartWand2_inferencing/`. At start-up the firmware looks up each class by its label name, so the label order of a retrained model does not matter, but the five label names must stay the same.
 
 ## Metric Boundary
 
