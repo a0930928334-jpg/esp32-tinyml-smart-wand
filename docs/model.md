@@ -31,9 +31,11 @@ The labels are the pinyin names used when the data was recorded, and the export 
 | Validation accuracy | 95.8% | Edge Impulse validation set |
 | Validation loss | ~0.11 | Edge Impulse |
 | Weighted precision / recall / F1 | ~0.96 | Edge Impulse |
-| Inference time | ~1 ms | On-device estimate |
-| Peak RAM | ~1.6 KB | Deployment estimate |
-| Flash | ~16.9 KB | Deployment estimate |
+| Inference time | ~1 ms classifier, ~21 ms with spectral features | Edge Impulse estimate, Cortex-M4F at 80 MHz |
+| Peak RAM | ~1.6 KB classifier, ~3.2 KB with spectral features | Edge Impulse estimate |
+| Flash | ~16.9 KB (int8, EON Compiler); 21.0 KB as float32 | Edge Impulse estimate |
+
+The timing and memory figures are Edge Impulse's deployment estimates for its default target, a Cortex-M4F at 80 MHz. They were not measured on the ESP32-S3, whose 240 MHz core should be faster. Quantising to int8 did not change validation accuracy (95.8% for both int8 and float32) and saved about 20% of flash. Measuring the real numbers on an Arm board is listed in [limitations.md](limitations.md).
 
 The 95.8% figure is measured on data held out from the same recordings as the training set. Recognition on the physical prototype was about 90%; [testing.md](testing.md) covers that gap.
 

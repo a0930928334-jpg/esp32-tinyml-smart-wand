@@ -41,7 +41,7 @@ model's output order does not matter.
 | Setting | Value | Why |
 |---|---|---|
 | Sample period | 10 ms | Must match the training data's sampling rate |
-| Inference | every 5th sample (50 ms) | Model runs in ~1 ms, so this keeps the CPU mostly idle |
+| Inference | every 5th sample (50 ms) | Spectral features plus classifier are estimated at ~21 ms (Cortex-M4F, 80 MHz), so one window fits inside the 50 ms budget |
 | Wake-up gate | peak \|a\| ≥ 13 m/s² | Skips inference for small movements |
 | Confidence / noise | > 0.80 / < 0.75 | Rejects uncertain windows |
 | Cooldown | 1000 ms | Stops one gesture from firing twice |

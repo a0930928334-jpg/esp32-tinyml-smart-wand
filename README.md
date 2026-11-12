@@ -12,8 +12,8 @@ This was my undergraduate final-year project (Zhejiang Gongshang University, 202
 
 | | |
 |---|---|
-| On-device inference | ~1 ms per window on the ESP32-S3 |
-| Model footprint | ~1.6 KB peak RAM, ~16.9 KB flash |
+| On-device inference | ~1 ms for the classifier, ~21 ms including spectral features (Edge Impulse estimate for a Cortex-M4F at 80 MHz; not measured on the ESP32-S3) |
+| Model footprint | ~1.6 KB peak RAM, ~16.9 KB flash for the int8 classifier; ~3.2 KB RAM with the DSP block (same estimate) |
 | Validation accuracy | 95.8% (Edge Impulse validation set) |
 | Physical tests | ~90% single gesture, ~85% two-step command, ~89% infrared delivery |
 | Commands | 6, built from 5 gesture classes |
