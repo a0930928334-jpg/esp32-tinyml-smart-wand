@@ -64,7 +64,7 @@ cd firmware/wand-esp32s3 && pio run -t upload     # needs the Edge Impulse libra
 cd firmware/receiver-nano && pio run -t upload
 ```
 
-The trained model is not committed. [firmware/wand-esp32s3/README.md](firmware/wand-esp32s3/README.md) explains where to put the Edge Impulse export.
+The trained model is not committed to git. Download the Edge Impulse export (`ei-smartwand2-arduino-1.0.2.zip`) from the [Releases page](https://github.com/a0930928334-jpg/esp32-tinyml-smart-wand/releases) and unzip it into `firmware/wand-esp32s3/lib/SmartWand2_inferencing/`; [firmware/wand-esp32s3/README.md](firmware/wand-esp32s3/README.md) has the details.
 
 ## Where to look first
 

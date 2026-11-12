@@ -16,13 +16,13 @@ The sensor is configured for ±8 g, ±500 °/s and a 21 Hz low-pass filter. The 
 
 | Label | Gesture | Role |
 |---|---|---|
-| `HUAQUAN` | Circle | Trigger: on / open |
+| `huaquan` | Circle | Trigger: on / open |
 | `Z` | Z-shaped stroke | Trigger: off / close |
-| `QIANCI` | Forward thrust | Prefix: selects the door |
-| `SHANGTIAO` | Upward swing | Prefix: selects the curtain |
-| `ZAOSHENG` | Noise (any other movement) | Never triggers an action |
+| `qianci` | Forward thrust | Prefix: selects the door |
+| `shangtiao` | Upward swing | Prefix: selects the curtain |
+| `zaosheng` | Noise (any other movement) | Never triggers an action |
 
-The labels are the pinyin names used when the data was recorded. The noise class matters as much as the gestures: without it, every strong movement would be forced into one of the four gesture classes.
+The labels are the pinyin names used when the data was recorded, and the export keeps their exact spelling (lower case except `Z`). The firmware matches them case-sensitively. The noise class matters as much as the gestures: without it, every strong movement would be forced into one of the four gesture classes.
 
 ## Results
 
@@ -50,7 +50,7 @@ Step 3 exists because the model learned a shortcut: it sometimes labelled other 
 
 ## Rebuilding
 
-Export the Edge Impulse project as an Arduino library and unzip it into `firmware/wand-esp32s3/lib/SmartWand2_inferencing/`. The firmware includes it as:
+The export is not committed to git. Download `ei-smartwand2-arduino-1.0.2.zip` from the [GitHub release](https://github.com/a0930928334-jpg/esp32-tinyml-smart-wand/releases) and unzip it into `firmware/wand-esp32s3/lib/SmartWand2_inferencing/`, or export the Edge Impulse project yourself as an Arduino library (Quantized int8, EON Compiler). The firmware includes it as:
 
 ```cpp
 #include <SmartWand2_inferencing.h>
