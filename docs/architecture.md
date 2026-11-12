@@ -55,11 +55,11 @@ Before running the classifier, the firmware checks whether the motion intensity 
 
 The Edge Impulse exported model runs on the ESP32. It outputs confidence scores for five gesture classes:
 
-- Z
-- HUAQUAN
-- QIANCI
-- SHANGTIAO
-- ZAOSHENG
+- `Z` (Z-shaped stroke)
+- `huaquan` (circle)
+- `qianci` (forward thrust)
+- `shangtiao` (upward swing)
+- `zaosheng` (noise)
 
 ### 5. Robustness Filtering
 
@@ -77,9 +77,9 @@ These checks reduce false triggers. They also reject some real gestures; see [te
 
 The system uses a finite-state machine based on prefix gestures and trigger gestures.
 
-- QIANCI and SHANGTIAO are prefix gestures.
-- HUAQUAN and Z are trigger gestures.
-- ZAOSHENG is treated as noise and does not trigger control actions.
+- `qianci` and `shangtiao` are prefix gestures.
+- `huaquan` and `Z` are trigger gestures.
+- `zaosheng` is treated as noise and does not trigger control actions.
 
 This design allows a small gesture set to generate six simulated control commands.
 

@@ -18,7 +18,9 @@ namespace wand {
 
 // Gesture classes. The model's label names are listed in kLabelNames in the
 // same order; main.cpp looks scores up by name, so the model's own output
-// order does not matter.
+// order does not matter. The names must match the Edge Impulse export
+// exactly (strcmp, case-sensitive): the export keeps the labels as they were
+// typed when the data was recorded, which is lower case except for "Z".
 enum Gesture : int8_t {
     kNoGesture = -1,
     kZ = 0,         // Z-shaped stroke: trigger for "off / close"
@@ -30,7 +32,7 @@ enum Gesture : int8_t {
 
 const int kClassCount = 5;
 const char* const kLabelNames[kClassCount] = {
-    "Z", "HUAQUAN", "QIANCI", "SHANGTIAO", "ZAOSHENG",
+    "Z", "huaquan", "qianci", "shangtiao", "zaosheng",
 };
 
 const int kAxesPerFrame = 6;  // ax, ay, az (m/s^2), gx, gy, gz (rad/s)
