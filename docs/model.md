@@ -50,7 +50,7 @@ Step 3 exists because the model learned a shortcut: it sometimes labelled other 
 
 ## Rebuilding
 
-The export is not committed to git. Download `ei-smartwand2-arduino-1.0.2-impulse-#1.zip` from the [GitHub release](https://github.com/a0930928334-jpg/esp32-tinyml-smart-wand/releases) and unzip it into `firmware/wand-esp32s3/lib/SmartWand2_inferencing/`, or export the Edge Impulse project yourself as an Arduino library (Quantized int8, EON Compiler). The firmware includes it as:
+The export is not committed to git. Download `ei-smartwand2-arduino-1.0.2.zip` from the [GitHub release](https://github.com/a0930928334-jpg/esp32-tinyml-smart-wand/releases) and unzip it into `firmware/wand-esp32s3/lib/SmartWand2_inferencing/`, or export the Edge Impulse project yourself as an Arduino library (Quantized int8, EON Compiler). The firmware includes it as:
 
 ```cpp
 #include <SmartWand2_inferencing.h>

@@ -27,7 +27,7 @@ the IR pin would need to move.
 ## Build
 
 1. Get the Edge Impulse export and unzip it into `lib/SmartWand2_inferencing/`. The model is not
-   committed to git; the prebuilt export (`ei-smartwand2-arduino-1.0.2-impulse-#1.zip`) is attached to the
+   committed to git; the prebuilt export (`ei-smartwand2-arduino-1.0.2.zip`) is attached to the
    [GitHub release](https://github.com/a0930928334-jpg/esp32-tinyml-smart-wand/releases). To rebuild it instead, export the Edge Impulse project as an
    **Arduino library** (Quantized int8, EON Compiler).
 2. `pio run -e esp32-s3 -t upload && pio device monitor`
